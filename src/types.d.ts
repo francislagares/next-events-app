@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 interface IEvent {
   id: string;
   title: string;
@@ -14,4 +16,9 @@ interface IFeatured {
 
 interface IEventList {
   events: IEvent[];
+}
+
+interface IButton {
+  link: string;
+  children?: ReactNode;
 }
