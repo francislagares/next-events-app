@@ -1,7 +1,9 @@
-import Link from 'next/link';
+import Button from '@/components/ui/Button';
+import classes from '@/styles/event-item.module.css';
+import { IFeatured } from '@/types';
 
 const EventItem = ({ featured }: IFeatured) => {
-  const { id, title, description, location, date, image } = featured;
+  const { id, title, location, date, image } = featured;
 
   const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',
@@ -13,14 +15,23 @@ const EventItem = ({ featured }: IFeatured) => {
   const exploreLink = `/events/${id}`;
 
   return (
-    <>
+    <div className={classes.item}>
       <img src={`/${image}`} alt="Event" />
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <address>{formattedAddress}</address>
-      <time>{humanReadableDate}</time>
-      <Link href={exploreLink}>Explore Event</Link>
-    </>
+      <div className={classes.content}>
+        <div className={classes.summary}>
+          <h2>{title}</h2>
+          <div className={classes.date}>
+            <time>{humanReadableDate}</time>
+          </div>
+          <div className={classes.address}>
+            <address>{formattedAddress}</address>
+          </div>
+        </div>
+        <div className={classes.actions}>
+          <Button link={exploreLink}>Explore Event</Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
