@@ -13,14 +13,14 @@ const EventItem = ({ featured }: IFeatured) => {
   const exploreLink = `/events/${id}`;
 
   return (
-    <div className="featured-events" key={id}>
+    <>
       <img src={`/${image}`} alt="Event" />
       <h2>{title}</h2>
       <p>{description}</p>
       <address>{formattedAddress}</address>
       <time>{humanReadableDate}</time>
       <Link href={exploreLink}>Explore Event</Link>
-    </div>
+    </>
   );
 };
 
