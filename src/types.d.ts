@@ -32,4 +32,5 @@ interface IEventLogistics {
 interface IButton {
   link: string;
   children?: ReactNode;
+  onClick: () => void;
 }
