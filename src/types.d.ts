@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface IEvent {
   id: string;
@@ -34,3 +34,5 @@ interface IButton {
   children?: ReactNode;
   onClick: () => void;
 }
+
+type Submit = React.FormEvent<HTMLFormElement>;
