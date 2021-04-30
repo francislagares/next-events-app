@@ -30,9 +30,16 @@ interface IEventLogistics {
 }
 
 interface IButton {
-  link: string;
+  link?: string;
   children?: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
+}
+
+type Year = string | undefined;
+type Month = string | undefined;
+
+interface IFilter {
+  onFilter: (year: Year, month: Month) => void;
 }
 
 type Submit = React.FormEvent<HTMLFormElement>;
