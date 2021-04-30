@@ -3,10 +3,10 @@ import ArrowRightIcon from '@/components/icons/arrow-right-icon';
 import DateIcon from '@/components/icons/date-icon';
 import Button from '@/components/ui/Button';
 import classes from '@/styles/event-item.module.css';
-import { IFeatured } from '@/types';
+import { IEventItem } from '@/types';
 
-const EventItem = ({ featured }: IFeatured) => {
-  const { id, title, location, date, image } = featured;
+const EventItem = ({ item }: IEventItem) => {
+  const { id, title, location, date, image } = item;
 
   const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',

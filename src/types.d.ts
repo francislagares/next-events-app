@@ -10,8 +10,8 @@ interface IEvent {
   isFeatured?: boolean;
 }
 
-interface IFeatured {
-  featured: IEvent;
+interface IEventItem {
+  item: IEvent;
 }
 
 interface IEventList {

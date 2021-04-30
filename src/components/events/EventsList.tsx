@@ -5,7 +5,7 @@ import { IEventList } from '@/types';
 const EventsList = ({ events }: IEventList) => (
   <div className={classes.list}>
     {events.map((event) => (
-      <EventItem key={event.id} featured={event} />
+      <EventItem key={event.id} item={event} />
     ))}
   </div>
 );

@@ -1,3 +1,5 @@
+import { IEvent } from '@/types';
+
 const DUMMY_EVENTS: IEvent[] = [
   {
     id: `e1`,
@@ -32,7 +34,7 @@ export function getFeaturedEvents() {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);
 }
 
-export function getAllEvents() {
+export function getAllEvents(): IEvent[] {
   return DUMMY_EVENTS;
 }
 
