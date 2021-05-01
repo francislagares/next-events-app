@@ -35,6 +35,10 @@ interface IButton {
   onClick?: () => void;
 }
 
+interface IDate {
+  date: Date;
+}
+
 type Year = string | undefined;
 type Month = string | undefined;
 
