@@ -16,7 +16,6 @@ const AllEvents = () => {
 
   return (
     <>
-      <h1>The Events List Page</h1>
       <EventsFilter onFilter={findEventsHandler} />
       <EventsList events={events} />
     </>
