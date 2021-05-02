@@ -1,18 +1,70 @@
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import EventList from '@/components/events/EventsList';
 import ResultsTitle from '@/components/events/ResultsTitle';
 import Button from '@/components/ui/Button';
 import ErrorAlert from '@/components/ui/ErrorAlert';
-import { getFilteredEvents } from '@/data/dummy-data';
+import { getFilteredEvents } from '@/helpers/api-utils';
+import { IFilteredEvents } from '@/types';
 
-const FilteredEvents = () => {
+const FilteredEvents = ({ hasError, events, date }: IFilteredEvents) => {
   const router = useRouter();
 
-  const filterData = router.query.slug;
+  /* const filterData = router.query.slug;
 
   if (!filterData) {
     return <p className="center">Loading...</p>;
   }
+
+  const filteredYear = filterData[0];
+  const filteredMonth = filterData[1];
+
+  // Transform data strings to numbers
+  const numYear = +filteredYear;
+  const numMonth = +filteredMonth; */
+
+  if (hasError) {
+    return (
+      <>
+        <ErrorAlert>
+          <p>Invalid filter. Please adjust your values!</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
+        </div>
+      </>
+    );
+  }
+
+  const filteredEvents = events;
+
+  if (!filteredEvents || filteredEvents.length === 0) {
+    return (
+      <>
+        <ErrorAlert>
+          <p>No events found for the chosen filter!</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
+        </div>
+      </>
+    );
+  }
+
+  const newDate = new Date(date.year, date.month - 1);
+
+  return (
+    <>
+      <ResultsTitle date={newDate} />
+      <EventList events={filteredEvents} />
+    </>
+  );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params } = context;
+
+  const filterData = params?.slug;
 
   const filteredYear = filterData[0];
   const filteredMonth = filterData[1];
@@ -29,44 +81,29 @@ const FilteredEvents = () => {
     numMonth < 1 ||
     numMonth > 12
   ) {
-    return (
-      <>
-        <ErrorAlert>
-          <p>Invalid filter. Please adjust your values!</p>
-        </ErrorAlert>
-        <div className="center">
-          <Button link="/events">Show All Events</Button>
-        </div>
-      </>
-    );
+    return {
+      props: { hasError: true },
+      /* notFound: true,
+      redirect: {
+        destination: '/error',
+      }, */
+    };
   }
 
-  const filteredEvents = getFilteredEvents({
+  const filteredEvents = await getFilteredEvents({
     year: numYear,
     month: numMonth,
   });
 
-  if (!filteredEvents || filteredEvents.length === 0) {
-    return (
-      <>
-        <ErrorAlert>
-          <p>No events found for the chosen filter!</p>
-        </ErrorAlert>
-        <div className="center">
-          <Button link="/events">Show All Events</Button>
-        </div>
-      </>
-    );
-  }
-
-  const date = new Date(numYear, numMonth - 1);
-
-  return (
-    <>
-      <ResultsTitle date={date} />
-      <EventList events={filteredEvents} />
-    </>
-  );
+  return {
+    props: {
+      events: filteredEvents,
+      date: {
+        year: numYear,
+        month: numMonth,
+      },
+    },
+  };
 };
 
 export default FilteredEvents;

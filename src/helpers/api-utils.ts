@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { IEvent } from '@/types';
+import { IDate, IEvent } from '@/types';
 
 /* eslint-disable guard-for-in */
 export const getAllEvents = async (): Promise<IEvent[]> => {
@@ -30,4 +30,19 @@ export const getEventById = async (id: string): Promise<IEvent | undefined> => {
   const allEvents = await getAllEvents();
 
   return allEvents.find((event) => event.id === id);
+};
+
+export const getFilteredEvents = async (dateFilter: IDate) => {
+  const { year, month } = dateFilter;
+
+  const allEvents = await getAllEvents();
+
+  const filteredEvents = allEvents.filter((event) => {
+    const eventDate = new Date(event.date);
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    );
+  });
+
+  return filteredEvents;
 };

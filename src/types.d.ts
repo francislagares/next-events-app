@@ -29,6 +29,12 @@ interface IEventLogistics {
   imageAlt: string;
 }
 
+interface IFilteredEvents {
+  events: IEvent[];
+  date: Date;
+  hasError: boolean;
+}
+
 interface IButton {
   link?: string;
   children?: ReactNode;
@@ -37,6 +43,8 @@ interface IButton {
 
 interface IDate {
   date: Date;
+  month?: number | undefined;
+  year?: number | undefined;
 }
 
 type Year = string | undefined;
