@@ -1,16 +1,12 @@
-import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next';
 import EventContent from '@/components/event-detail/EventContent';
 import EventLogistics from '@/components/event-detail/EventLogistics';
 import EventSummary from '@/components/event-detail/EventSummary';
 import ErrorAlert from '@/components/ui/ErrorAlert';
-import { getEventById } from '@/data/dummy-data';
+import { getAllEvents, getEventById } from '@/helpers/api-utils';
+import { IEventItem } from '@/types';
 
-const EventDetail = () => {
-  const router = useRouter();
-
-  const { eventId } = router.query;
-  const event = getEventById(eventId);
-
+const EventDetail = ({ event }: IEventItem) => {
   if (!event) {
     return (
       <ErrorAlert>
@@ -33,6 +29,29 @@ const EventDetail = () => {
       </EventContent>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { eventId } = context.params;
+
+  const event = await getEventById(eventId);
+
+  return {
+    props: {
+      event,
+    },
+  };
+};
+
+export const getStaticPaths = async () => {
+  const events = await getAllEvents();
+
+  const paths = events.map((event) => ({ params: { eventId: event.id } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
 };
 
 export default EventDetail;

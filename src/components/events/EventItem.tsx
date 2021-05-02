@@ -5,8 +5,8 @@ import Button from '@/components/ui/Button';
 import classes from '@/styles/event-item.module.css';
 import { IEventItem } from '@/types';
 
-const EventItem = ({ item }: IEventItem) => {
-  const { id, title, location, date, image } = item;
+const EventItem = ({ event }: IEventItem) => {
+  const { id, title, location, date, image } = event;
 
   const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',

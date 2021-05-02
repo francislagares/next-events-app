@@ -11,7 +11,7 @@ interface IEvent {
 }
 
 interface IEventItem {
-  item: IEvent;
+  event: IEvent;
 }
 
 interface IEventList {
