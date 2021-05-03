@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import EventsFilter from '@/components/events/EventsFilter';
 import EventsList from '@/components/events/EventsList';
@@ -16,6 +17,13 @@ const AllEvents = ({ events }: IEventList) => {
 
   return (
     <>
+      <Head>
+        <title>All Events</title>
+        <meta
+          name="description"
+          content="Find a lot of great events that allow you to evolve..."
+        />
+      </Head>
       <EventsFilter onFilter={findEventsHandler} />
       <EventsList events={events} />
     </>

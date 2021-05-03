@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import EventList from '@/components/events/EventsList';
 import ResultsTitle from '@/components/events/ResultsTitle';
@@ -55,6 +56,10 @@ const FilteredEvents = ({ hasError, events, date }: IFilteredEvents) => {
 
   return (
     <>
+      <Head>
+        <title>Filtered Events</title>
+        <meta name="description" content={`All events for ${newDate}`} />
+      </Head>
       <ResultsTitle date={newDate} />
       <EventList events={filteredEvents} />
     </>
