@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import AddressIcon from '@/components/icons/address-icon';
 import ArrowRightIcon from '@/components/icons/arrow-right-icon';
 import DateIcon from '@/components/icons/date-icon';
@@ -19,7 +20,7 @@ const EventItem = ({ event }: IEventItem) => {
 
   return (
     <div className={classes.item}>
-      <img src={`/${image}`} alt="Event" />
+      <Image src={`/${image}`} alt="Event" width={250} height={160} />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>
