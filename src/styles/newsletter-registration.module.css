@@ -1,0 +1,41 @@
+.newsletter {
+  width: 90%;
+  margin: 3rem auto;
+  max-width: 20rem;
+}
+
+.newsletter h2 {
+  text-align: center;
+}
+
+.control input {
+  padding: .25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  flex: 1;
+}
+
+.newsletter button {
+  color: #dafff7;
+  border: 1px solid #03be9f;
+  border-radius: 6px;
+  background-color: #03be9f;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.newsletter button:hover,
+.newsletter button:focus,
+.newsletter button:active {
+  background-color: #02afa1;
+  border-color: #02afa1;
+}
+
+.control {
+  display: flex;
+}
