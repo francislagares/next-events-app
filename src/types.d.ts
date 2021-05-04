@@ -55,3 +55,13 @@ interface IFilter {
 }
 
 type Submit = React.FormEvent<HTMLFormElement>;
+
+interface IComment {
+  name: string;
+  email: string;
+  text: string;
+}
+
+interface ICommentProps {
+  onAddComment: (args: IComment) => void;
+}
