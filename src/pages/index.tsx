@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import EventsList from '@/components/events/EventsList';
+import NewsletterRegistration from '@/components/input/newsletter-registration';
 import { getFeaturedEvents } from '@/helpers/api-utils';
 import { IEventList } from '@/types';
 
@@ -13,6 +14,7 @@ const Home = ({ events }: IEventList) => (
         content="Find a lot of great events that allow you to evolve..."
       />
     </Head>
+    <NewsletterRegistration />
     <EventsList events={events} />
   </div>
 );
