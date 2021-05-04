@@ -39,7 +39,8 @@ const EventDetail = ({ event }: IEventItem) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { eventId } = context.params;
+  // eslint-disable-next-line prefer-destructuring
+  const eventId = context.params?.eventId;
 
   const event = await getEventById(eventId);
 
