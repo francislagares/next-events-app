@@ -1,19 +1,39 @@
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import CommentList from './comment-list';
 import NewComment from './new-comment';
 import classes from '@/styles/comments.module.css';
+import { IComment } from '@/types';
 
-function Comments({ eventId }) {
+const Comments = ({ eventId }) => {
   const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<IComment[]>([]);
 
-  function toggleCommentsHandler() {
+  useEffect(() => {
+    if (showComments) {
+      fetch(`/api/comments/${eventId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setComments(data.comments);
+        });
+    }
+  }, [showComments]);
+
+  const toggleCommentsHandler = () => {
     setShowComments((prevStatus) => !prevStatus);
-  }
+  };
 
-  function addCommentHandler(commentData) {
+  const addCommentHandler = (commentData: IComment) => {
     // send data to API
-  }
+    fetch(`/api/comments/${eventId}`, {
+      method: 'POST',
+      body: JSON.stringify(commentData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
 
   return (
     <section className={classes.comments}>
@@ -21,9 +41,9 @@ function Comments({ eventId }) {
         {showComments ? 'Hide' : 'Show'} Comments
       </button>
       {showComments && <NewComment onAddComment={addCommentHandler} />}
-      {showComments && <CommentList />}
+      {showComments && <CommentList comments={comments} />}
     </section>
   );
-}
+};
 
 export default Comments;

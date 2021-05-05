@@ -57,9 +57,14 @@ interface IFilter {
 type Submit = React.FormEvent<HTMLFormElement>;
 
 interface IComment {
+  id?: number;
   name: string;
   email: string;
   text: string;
+}
+
+interface ICommentList {
+  comments: IComment[];
 }
 
 interface ICommentProps {

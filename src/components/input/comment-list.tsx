@@ -1,20 +1,16 @@
 import classes from '@/styles/comment-list.module.css';
+import { ICommentList } from '@/types';
 
-const CommentList = () => (
+const CommentList = ({ comments }: ICommentList) => (
   <ul className={classes.comments}>
-    {/* Render list of comments - fetched from API */}
-    <li>
-      <p>My comment is amazing!</p>
-      <div>
-        By <address>Francis</address>
-      </div>
-    </li>
-    <li>
-      <p>My comment is amazing!</p>
-      <div>
-        By <address>Francis</address>
-      </div>
-    </li>
+    {comments.map((comment) => (
+      <li key={comment.id}>
+        <p>{comment.text}</p>
+        <div>
+          By <address>{comment.name}</address>
+        </div>
+      </li>
+    ))}
   </ul>
 );
 
