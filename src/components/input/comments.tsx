@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import CommentList from './comment-list';
 import NewComment from './new-comment';
 import classes from '@/styles/comments.module.css';
-import { IComment } from '@/types';
+import { IComment, IEvent } from '@/types';
 
-const Comments = ({ eventId }) => {
+interface Props {
+  eventId: IEvent;
+}
+
+const Comments = ({ eventId }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<IComment[]>([]);
 
