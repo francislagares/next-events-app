@@ -70,3 +70,15 @@ interface ICommentList {
 interface ICommentProps {
   onAddComment: (args: IComment) => void;
 }
+
+interface IContext {
+  notification: INotification | null;
+  showNotification: (notificationData: INotification) => void;
+  hideNotification: () => void;
+}
+
+interface INotification {
+  title: string;
+  message: string;
+  status: string;
+}
