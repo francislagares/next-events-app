@@ -1,11 +1,26 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-destructuring */
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  connectDatabase,
+  insertDocument,
+  getAllDocuments,
+} from '@/helpers/db-util';
 
-const commentHandler = (req: NextApiRequest, res: NextApiResponse) => {
+const commentHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const eventId = req.query.eventId;
 
+  let client;
+
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res.status(500).json({ message: 'Connecting to the database failed!' });
+    return;
+  }
+
   if (req.method === 'POST') {
-    const { name, email, text } = req.body;
+    const { email, name, text } = req.body;
 
     if (
       !email.includes('@') ||
@@ -15,29 +30,38 @@ const commentHandler = (req: NextApiRequest, res: NextApiResponse) => {
       text.trim() === ''
     ) {
       res.status(422).json({ message: 'Invalid input.' });
+      client.close();
       return;
     }
 
     const newComment = {
-      id: new Date().toISOString(),
-      name,
       email,
+      name,
       text,
+      eventId,
     };
 
-    console.log(newComment);
+    let result;
 
-    res.status(201).json({ message: 'Added comment', comment: newComment });
+    try {
+      result = await insertDocument(client, 'comments', newComment);
+      newComment._id = result.insertedId;
+      res.status(201).json({ message: 'Added comment.', comment: newComment });
+    } catch (error) {
+      res.status(500).json({ message: 'Inserting comment failed!' });
+    }
   }
 
   if (req.method === 'GET') {
-    const dummyList = [
-      { id: 'c1', name: 'Francis', text: 'A first comment!' },
-      { id: 'c2', name: 'Sophie', text: 'A second comment!' },
-    ];
-
-    res.status(201).json({ comments: dummyList });
+    try {
+      const documents = await getAllDocuments(client, 'comments', { _id: -1 });
+      res.status(200).json({ comments: documents });
+    } catch (error) {
+      res.status(500).json({ message: 'Getting comments failed.' });
+    }
   }
+
+  client.close();
 };
 
 export default commentHandler;
